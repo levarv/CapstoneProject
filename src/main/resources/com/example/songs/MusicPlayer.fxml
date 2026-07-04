@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15" alignment="CENTER"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="MusicPlayerController">
+
+    <Label fx:id="songLabel" text="No Song Loaded"/>
+
+    <HBox spacing="10" alignment="CENTER">
+
+        <Button text="Play" onAction="#playSong"/>
+        <Button text="Pause" onAction="#pauseSong"/>
+        <Button text="Stop" onAction="#stopSong"/>
+
+    </HBox>
+
+</VBox>
