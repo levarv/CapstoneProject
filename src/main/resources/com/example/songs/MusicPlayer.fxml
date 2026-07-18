@@ -6,7 +6,7 @@
 <VBox spacing="15" alignment="CENTER"
       xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="MusicPlayerController">
+      fx:controller="com.example.songs.MusicPlayerController"
 
     <Label fx:id="songLabel" text="No Song Loaded"/>
 
@@ -15,7 +15,7 @@
         <Button text="Play" onAction="#playSong"/>
         <Button text="Pause" onAction="#pauseSong"/>
         <Button text="Stop" onAction="#stopSong"/>
-
+        <Button text="Next" onAction="#nextSong"/>
     </HBox>
 
 </VBox>
