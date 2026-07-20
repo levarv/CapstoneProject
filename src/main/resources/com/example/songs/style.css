@@ -1,126 +1,452 @@
-/* Main background */
+/* NIGHT STAR BACKGROUND */
+
 .root {
     -fx-background-color:
         linear-gradient(
             to bottom,
-            #1e1e2f,
-            #0b0b12
+            #080014,
+            #14002b,
+            #02010a
         );
 }
 
 
-/* Title */
+/* TITLE */
+
 .title-label {
-    -fx-text-fill: #ff2aa3;
+    -fx-text-fill:
+        linear-gradient(
+            to right,
+            white,
+            #ff66c4,
+            #ff0093
+        );
+
+    -fx-font-size:28px;
+
+    -fx-effect:
+        dropshadow(
+            gaussian,
+            rgba(255,0,147,0.8),
+            15,
+            0.4,
+            0,
+            0
+        );
 }
 
 
-/* Song name */
+/* SECTION TITLES */
+
+.section-title {
+    -fx-text-fill:white;
+    -fx-font-size:22px;
+    -fx-font-weight:bold;
+}
+
+
+/* SONG INFO */
+
 .song-label {
-
-    -fx-text-fill: white;
-
+    -fx-text-fill:white;
+    -fx-font-size:26px;
+    -fx-font-weight:bold;
 }
 
 
-/* Artist + queue */
-.artist-label,
+.artist-label {
+    -fx-text-fill:#d0d0df;
+    -fx-font-size:18px;
+}
+
+
 .queue-label {
+    -fx-text-fill:#aaaaaa;
+    -fx-font-size:15px;
+}
 
-    -fx-text-fill: #a0a0a0;
+
+.time-label {
+    -fx-text-fill:white;
+    -fx-font-family:"Segoe UI";
+    -fx-font-size:15px;
+    -fx-font-weight:bold;
+}
+
+
+
+/* MENU */
+
+.menu-bar {
+    -fx-background-color:
+        rgba(255,255,255,0.05);
+
+    -fx-background-radius:20;
+}
+
+
+.menu-bar .label {
+    -fx-text-fill:white;
+    -fx-font-size:16px;
+    -fx-font-weight:bold;
+}
+
+
+/* QUEUE PANEL */
+
+.queue-panel {
+
+    -fx-background-color:
+        rgba(255,255,255,0.06);
+
+    -fx-background-radius:25;
+}
+
+
+
+.queue-panel .list-view {
+
+    -fx-background-color:
+        rgba(0,0,0,0.25);
+
+    -fx-background-radius:20;
 
 }
 
 
 
-/* ALL BUTTONS */
+.queue-panel .list-cell {
+
+    -fx-text-fill:white;
+
+    -fx-font-size:16px;
+
+    -fx-font-weight:bold;
+
+    -fx-background-color:transparent;
+
+}
+
+
+.queue-panel .list-cell:hover {
+
+    -fx-background-color:#ff0093;
+
+    -fx-background-radius:10;
+
+}
+
+
+
+/* MAIN BUTTONS */
+
 .button {
 
     -fx-background-color:
         linear-gradient(
             to bottom,
-            #ff2aa3,
-            #c00070
+            #ff4db8,
+            #b80075
         );
 
-    -fx-text-fill: white;
+    -fx-text-fill:white;
 
-    -fx-font-size: 16px;
+    -fx-font-size:18px;
 
-    -fx-background-radius: 30;
+    -fx-font-weight:bold;
 
-    -fx-border-radius: 30;
+    -fx-background-radius:50;
 
-    -fx-padding:
-        10px 18px;
+    -fx-min-width:48px;
 
+    -fx-min-height:48px;
+
+    -fx-cursor:hand;
+
+    -fx-effect:
+        dropshadow(
+            gaussian,
+            rgba(255,0,150,0.6),
+            15,
+            0.3,
+            0,
+            3
+        );
 }
 
 
 
-/* Hover effect */
 .button:hover {
 
     -fx-background-color:
         linear-gradient(
             to bottom,
-            #ff5fc1,
+            #ff85d2,
             #ff0093
         );
 
-    -fx-scale-x: 1.08;
-    -fx-scale-y: 1.08;
+    -fx-scale-x:1.12;
+
+    -fx-scale-y:1.12;
 
 }
 
 
 
-/* Slider track */
+.button:pressed {
+
+    -fx-scale-x:0.92;
+
+    -fx-scale-y:0.92;
+
+}
+
+
+
+/* PLAY BUTTON */
+
+.play-button {
+
+    -fx-min-width:70px;
+
+    -fx-min-height:70px;
+
+    -fx-font-size:30px;
+
+    -fx-background-color:
+        linear-gradient(
+            to bottom,
+            white,
+            #dddddd
+        );
+
+    -fx-text-fill:#ff0093;
+
+    -fx-effect:
+        dropshadow(
+            gaussian,
+            rgba(255,255,255,0.8),
+            20,
+            0.3,
+            0,
+            4
+        );
+
+}
+
+
+.play-button:hover {
+
+    -fx-background-color:
+        linear-gradient(
+            to bottom,
+            white,
+            #ffb8df
+        );
+
+}
+
+
+
+/* SMALL BUTTONS */
+
+.small-button {
+
+    -fx-background-color:#241b38;
+
+    -fx-border-color:#ff0093;
+
+    -fx-border-radius:20;
+
+    -fx-background-radius:20;
+
+    -fx-min-width:100px;
+
+    -fx-min-height:38px;
+
+    -fx-font-size:14px;
+
+}
+
+
+
+/* SLIDERS */
+
+.slider {
+
+    -fx-pref-height:8px;
+
+}
+
+
+
 .slider .track {
 
-    -fx-background-color:
-        #3a3a4a;
+    -fx-background-color:#343344;
 
-    -fx-background-radius: 10;
+    -fx-background-radius:20;
 
-    -fx-pref-height: 8px;
-
-}
-
-
-
-/* Slider filled part */
-.slider .colored-track {
-
-    -fx-background-color:
-        #ff0093;
+    -fx-pref-height:7px;
 
 }
 
 
 
-/* Slider knob */
 .slider .thumb {
 
-    -fx-background-color:
-        white;
+    -fx-background-color:white;
 
-    -fx-background-radius: 50;
+    -fx-background-radius:50%;
+
+    -fx-pref-width:16px;
+
+    -fx-pref-height:16px;
+
+    -fx-effect:
+        dropshadow(
+            gaussian,
+            rgba(255,0,147,0.9),
+            15,
+            0.5,
+            0,
+            0
+        );
 
 }
 
 
 
-/* Time labels */
-.time-label {
+.slider .thumb:hover {
 
-    -fx-text-fill: #bbbbbb;
+    -fx-background-color:#ff0093;
 
-    -fx-font-size: 13px;
+    -fx-scale-x:1.3;
 
+    -fx-scale-y:1.3;
+
+}
+
+
+
+/* VISUALIZER */
 
 .canvas {
-     -fx-background-color: transparent;
-    }
+
+    -fx-background-color:
+        rgba(255,255,255,0.03);
+
+    -fx-background-radius:20;
+
+}
+
+
+
+/* VOLUME + RECOMMENDATION */
+
+.volume-label {
+
+    -fx-text-fill:white;
+
+    -fx-font-size:16px;
+
+    -fx-font-weight:bold;
+
+}
+
+
+.recommendation-label {
+
+    -fx-text-fill:#ff8bd8;
+
+    -fx-font-size:15px;
+
+    -fx-font-weight:bold;
+
+}
+
+.queue-list .list-cell {
+
+    -fx-text-fill:white;
+    -fx-font-size:16px;
+    -fx-font-weight:bold;
+    -fx-background-color:transparent;
+
+}
+
+
+.queue-list .list-cell:selected {
+
+    -fx-background-color:#ff0093;
+
+    -fx-text-fill:white;
+
+    -fx-effect:
+        dropshadow(
+            gaussian,
+            rgba(255,0,147,1),
+            20,
+            0.6,
+            0,
+            0
+        );
+
+}
+
+.active-button {
+
+    -fx-background-color:
+        linear-gradient(
+            to bottom,
+            #ff85d2,
+            #ff0093
+        );
+
+    -fx-text-fill:white;
+
+    -fx-effect:
+        dropshadow(
+            gaussian,
+            rgba(255,0,147,1),
+            25,
+            0.7,
+            0,
+            0
+        );
+
+}
+
+if(repeat){
+
+    repeatButton.getStyleClass()
+            .add("active-button");
+
+}
+else{
+
+    repeatButton.getStyleClass()
+            .remove("active-button");
+
+}
+
+.active-button {
+
+    -fx-background-color:
+            linear-gradient(
+                    to bottom,
+                    #ff85d2,
+                    #ff0093
+            );
+
+    -fx-text-fill:white;
+
+    -fx-effect:
+            dropshadow(
+                    gaussian,
+                    rgba(255,0,147,1),
+                    30,
+                    0.8,
+                    0,
+                    0
+            );
 
 }

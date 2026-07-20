@@ -4,153 +4,215 @@
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Slider?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<VBox stylesheets="@style.css"
-      alignment="CENTER"
-      prefHeight="650.0"
-      prefWidth="400.0"
-      spacing="20.0"
-      xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.songs.MusicPlayerController">
+<StackPane stylesheets="@style.css"
+           xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.example.songs.MusicPlayerController">
 
-
-    <padding>
-        <Insets bottom="30.0"
-                left="30.0"
-                right="30.0"
-                top="30.0" />
-    </padding>
+    <!-- STAR BACKGROUND -->
+    <Canvas fx:id="starCanvas"
+            width="900"
+            height="600"
+            mouseTransparent="true"/>
 
 
-    <Label text="Tune Teller"
-           styleClass="title-label">
+    <!-- MAIN APP -->
+    <BorderPane prefWidth="900"
+                prefHeight="600">
 
-        <font>
-            <Font name="System Bold" size="24.0"/>
-        </font>
+        <!-- TOP MENU -->
+        <top>
+            <HBox spacing="40"
+                  alignment="CENTER"
+                  styleClass="menu-bar">
 
-    </Label>
+                <padding>
+                    <Insets top="20" bottom="20"/>
+                </padding>
 
+                <Button text="Library" onAction="#openLibrary"/>
+                <Button text="Playlists" onAction="#openPlaylists"/>
+                <Button text="Home" onAction="#openHome"/>
+                <Button text="Settings" onAction="#openSettings"/>
 
-
-    <ImageView fitHeight="220.0"
-               fitWidth="220.0"
-               pickOnBounds="true"
-               preserveRatio="true"/>
-
-
-
-    <Label fx:id="songLabel"
-           text="No song loaded"
-           styleClass="song-label">
-
-        <font>
-            <Font name="System Bold Italic" size="22.0"/>
-        </font>
-
-    </Label>
+            </HBox>
+        </top>
 
 
+        <!-- QUEUE -->
+        <left>
 
-    <Label fx:id="artistLabel"
-           text="Add Artist"
-           styleClass="artist-label">
+            <VBox spacing="15"
+                  prefWidth="230"
+                  styleClass="queue-panel">
 
-        <font>
-            <Font name="System Bold" size="15.0"/>
-        </font>
+                <padding>
+                    <Insets top="25"
+                            left="20"
+                            right="20"
+                            bottom="25"/>
+                </padding>
 
-    </Label>
+                <Label text="Queue"
+                       styleClass="section-title"/>
 
+                <ListView fx:id="queueList"
+                          prefHeight="400"
+                          styleClass="queue-list"/>
+            </VBox>
 
-
-    <!-- AUDIO VISUALIZER -->
-    <Canvas fx:id="visualizerCanvas"
-            width="320"
-            height="100"/>
+        </left>
 
 
 
-    <Label fx:id="nextSongLabel"
-           text="Up Next: None"
-           styleClass="queue-label">
+        <!-- NOW PLAYING -->
+        <center>
 
-        <font>
-            <Font name="System Bold" size="14.0"/>
-        </font>
+            <VBox alignment="CENTER"
+                  spacing="15">
 
-    </Label>
-
-
-
-    <Slider fx:id="progressSlider"
-            maxWidth="300.0"
-            prefWidth="300.0"/>
+                <padding>
+                    <Insets top="20"
+                            bottom="20"/>
+                </padding>
 
 
+                <Label text="Now Playing"
+                       styleClass="section-title"/>
 
-    <HBox alignment="CENTER"
-          spacing="200">
+
+                <Canvas fx:id="visualizerCanvas"
+                        width="350"
+                        height="100"/>
 
 
-        <Label fx:id="currentTimeLabel"
-               text="0:00"
-               styleClass="time-label">
+                <Label fx:id="songLabel"
+                       text="No Song"
+                       styleClass="song-label"/>
 
-            <font>
-                <Font name="System Bold" size="14.0"/>
-            </font>
 
-        </Label>
+                <Label fx:id="artistLabel"
+                       text="Unknown Artist"
+                       styleClass="artist-label"/>
 
 
 
-        <Label fx:id="totalTimeLabel"
-               text="0:00"
-               styleClass="time-label">
+                <!-- SONG PROGRESS -->
 
-            <font>
-                <Font name="System Bold" size="14.0"/>
-            </font>
-
-        </Label>
-
-
-    </HBox>
+                <Slider fx:id="progressSlider"
+                        prefWidth="320"
+                        maxWidth="320"/>
 
 
 
-    <HBox alignment="CENTER"
-          spacing="15.0">
+                <!-- SONG TIME -->
+
+                <HBox alignment="CENTER"
+                      spacing="250">
+
+                    <Label fx:id="currentTimeLabel"
+                           text="0:00"
+                           styleClass="time-label"/>
 
 
-        <Button onAction="#previousSong"
-                text="⏮"/>
+                    <Label fx:id="totalTimeLabel"
+                           text="0:00"
+                           styleClass="time-label"/>
+
+                </HBox>
 
 
-        <Button onAction="#playSong"
-                text="▶"/>
+
+                <!-- PLAYER CONTROLS -->
+
+                <HBox alignment="CENTER"
+                      spacing="18">
 
 
-        <Button onAction="#pauseSong"
-                text="⏸"/>
+                    <Button text="⏮"
+                            onAction="#previousSong"/>
 
 
-        <Button onAction="#stopSong"
-                text="■"/>
+                    <Button text="▶"
+                            styleClass="play-button"
+                            onAction="#playSong"/>
 
 
-        <Button onAction="#nextSong"
-                text="⏭"/>
+                    <Button text="⏸"
+                            onAction="#pauseSong"/>
 
 
-    </HBox>
+                    <Button text="■"
+                            onAction="#stopSong"/>
 
 
-</VBox>
+                    <Button text="⏭"
+                            onAction="#nextSong"/>
+
+
+                </HBox>
+
+
+
+                <!-- EXTRA CONTROLS -->
+
+                <HBox alignment="CENTER"
+                      spacing="20">
+
+
+                    <Button text="🔀 Shuffle"
+                            onAction="#shuffleSong"
+                            styleClass="small-button"/>
+
+                    <Button text="🔁 Repeat"
+                            onAction="#repeatSong"
+                            styleClass="small-button"/>
+
+                    <Button text="♥ Favorite"
+                            onAction="#favoriteSong"
+                            styleClass="small-button"/>
+                </HBox>
+
+
+
+                <!-- VOLUME -->
+
+                <VBox alignment="CENTER"
+                      spacing="8">
+
+
+                    <Label text="Volume"
+                           styleClass="volume-label"/>
+
+
+                    <Slider fx:id="volumeSlider"
+                            max="100"
+                            value="50"
+                            prefWidth="180"
+                            maxWidth="180"/>
+
+
+                </VBox>
+
+
+
+                <Label text='Next Recommendation: "Bad"'
+                       styleClass="recommendation-label"/>
+
+
+            </VBox>
+
+        </center>
+
+
+    </BorderPane>
+
+
+</StackPane>
