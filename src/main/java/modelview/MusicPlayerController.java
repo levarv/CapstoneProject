@@ -13,15 +13,15 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Button;
 import model.Main;
 import model.Song;
+import javafx.scene.control.ListCell;
 
 import model.SceneManager;
 
-import javafx.fxml.FXML;
-import model.SceneManager;
 
 
 public class MusicPlayerController {
 
+    private static MusicPlayerController instance;
 
     private int currentIndex = 0;
 
@@ -74,6 +74,8 @@ public class MusicPlayerController {
 
     @FXML
     public void initialize() {
+
+        instance = this;
 
         setupQueue();
         drawStars();
@@ -149,6 +151,8 @@ public class MusicPlayerController {
         setNextSongListener();
 
         queueList.getSelectionModel().select(currentIndex);
+
+        queueList.refresh();
 
         mediaPlayer.setOnError(() -> {
             System.err.println(
@@ -626,30 +630,44 @@ public class MusicPlayerController {
 
     //Setup Queue
     private void setupQueue() {
+        queueList.getItems().setAll(Main.getPlaybackQueue());
 
-        queueList.getItems().clear();
+        queueList.setCellFactory(list -> new ListCell<>() {
+            @Override
+            protected void updateItem(Song song, boolean empty) {
+                super.updateItem(song, empty);
 
-        if (Main.getPlaybackQueue().isEmpty()) {
-            return;
-        }
+                if (empty || song == null) {
+                    setText(null);
+                    setStyle("");
+                    return;
+                }
 
-        queueList.getItems().addAll(
-                Main.getPlaybackQueue()
-        );
+                setText(song.getName());
+
+                if (getIndex() == currentIndex) {
+                    setStyle(
+                            "-fx-text-fill: #ff1493;" +
+                                    "-fx-font-weight: bold;" +
+                                    "-fx-background-color: rgba(255, 20, 147, 0.18);" +
+                                    "-fx-border-color: #ff1493;" +
+                                    "-fx-border-radius: 8;" +
+                                    "-fx-background-radius: 8;"
+                    );
+                } else {
+                    setStyle(
+                            "-fx-text-fill: white;" +
+                                    "-fx-background-color: transparent;"
+                    );
+                }
+            }
+        });
 
         queueList.setOnMouseClicked(event -> {
+            int index = queueList.getSelectionModel().getSelectedIndex();
 
-            int index = queueList
-                    .getSelectionModel()
-                    .getSelectedIndex();
-
-            if (
-                    index >= 0 &&
-                            index < Main.getPlaybackQueue().size()
-            ) {
-
+            if (index >= 0 && index < Main.getPlaybackQueue().size()) {
                 currentIndex = index;
-
                 loadSong();
 
                 if (mediaPlayer != null) {
@@ -657,6 +675,8 @@ public class MusicPlayerController {
                 }
             }
         });
+
+        queueList.refresh();
     }
 
     //shuffle songs method
@@ -749,6 +769,12 @@ public class MusicPlayerController {
         }
 
         loadSong();
+    }
+    //refreshqueue 2
+    public static void refreshPlayer() {
+        if (instance != null) {
+            instance.refreshQueue();
+        }
     }
 
     //menu methods

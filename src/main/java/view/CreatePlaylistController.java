@@ -10,11 +10,10 @@ import java.util.ArrayList;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Playlist;
-import model.SQLQuery;
 import model.Song;
 
 import javafx.scene.control.ListCell;
-import javafx.scene.control.SelectionMode;
+//import javafx.scene.control.SelectionMode;
 
 public class CreatePlaylistController {
     @FXML
@@ -85,7 +84,7 @@ public class CreatePlaylistController {
 
         // Create list of selected songs from multi-select - RD
         ArrayList<Song> selectedSongs = new ArrayList<>(
-                songListView.getSelectionModel().getSelectedItems()
+                songListView.getItems()
         );
 
         // Create string to hold coverImagePath - RD
@@ -115,11 +114,10 @@ public class CreatePlaylistController {
     @FXML
     public void initialize() {
 
-        songListView.getSelectionModel().setSelectionMode(
+        /*songListView.getSelectionModel().setSelectionMode(
                 SelectionMode.MULTIPLE
-        );
+        );*/
 
-        loadSongs();
 
         songListView.setCellFactory(list -> new ListCell<>() {
             @Override
@@ -134,35 +132,45 @@ public class CreatePlaylistController {
             }
         });
     }
-    //Load songs method
-    private void loadSongs() {
-        songListView.getItems().setAll(
-                SQLQuery.getSongs()
-        );
-    }
+
     //import song method
     @FXML
     private void importSong() {
 
         FileChooser fileChooser = new FileChooser();
 
-        fileChooser.setTitle("Choose MP3 Song");
+        fileChooser.setTitle("Choose Audio Files");
 
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter(
-                        "MP3 Audio Files",
-                        "*.mp3"
+                        "Audio Files",
+                        "*.mp3",
+                        "*.wav",
+                        "*.au"
                 )
         );
 
-        File selectedFile = fileChooser.showOpenDialog(
-                songListView.getScene().getWindow()
-        );
+        java.util.List<File> selectedFiles =
+                fileChooser.showOpenMultipleDialog(
+                        songListView.getScene().getWindow()
+                );
 
-        if (selectedFile != null) {
-            SQLQuery.addSong(selectedFile);
-            loadSongs();
+        if (selectedFiles == null || selectedFiles.isEmpty()) {
+            return;
+        }
+
+        for (File file : selectedFiles) {
+            try {
+                Song song = new Song(file);
+                songListView.getItems().add(song);
+
+            } catch (RuntimeException exception) {
+                System.err.println(
+                        "Could not import: " + file.getName()
+                );
+
+                exception.printStackTrace();
+            }
         }
     }
-
 }

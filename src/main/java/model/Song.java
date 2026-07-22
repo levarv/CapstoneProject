@@ -44,33 +44,54 @@ public class Song implements Scorable {
      * @param file mp3 test file
      */
     public Song(File file) {
-        try {
-            Mp3File mp3file = new Mp3File(file);
+        if (file == null || !file.exists()) {
+            throw new IllegalArgumentException("Song file does not exist.");
+        }
 
-            if (mp3file.hasId3v2Tag()) {
-                this.name = mp3file.getId3v2Tag().getTitle();
-                this.bpm = mp3file.getId3v2Tag().getBPM();
-                this.genre = mp3file.getId3v2Tag().getGenreDescription();
-                this.artist = mp3file.getId3v2Tag().getArtist();
-                // this.media = new Media(file.getPath());
-            } else if (mp3file.hasId3v1Tag()) {
-                this.name = mp3file.getId3v1Tag().getTitle();
-                this.bpm = -1;
-                this.genre = mp3file.getId3v1Tag().getGenreDescription();
-                this.artist = mp3file.getId3v1Tag().getArtist();
-                //this.media = new Media(file.getPath());
+        String fileName = file.getName();
+        String lowerName = fileName.toLowerCase();
+
+        this.name = fileName.replaceFirst("\\.[^.]+$", "");
+        this.artist = "Unknown Artist";
+        this.genre = "Unknown";
+        this.bpm = -1;
+
+        if (lowerName.endsWith(".mp3")) {
+            try {
+                Mp3File mp3File = new Mp3File(file);
+
+                if (mp3File.hasId3v2Tag()) {
+                    String title = mp3File.getId3v2Tag().getTitle();
+                    String tagArtist = mp3File.getId3v2Tag().getArtist();
+                    String tagGenre = mp3File.getId3v2Tag().getGenreDescription();
+
+                    if (title != null && !title.isBlank()) this.name = title;
+                    if (tagArtist != null && !tagArtist.isBlank()) this.artist = tagArtist;
+                    if (tagGenre != null && !tagGenre.isBlank()) this.genre = tagGenre;
+
+                    this.bpm = mp3File.getId3v2Tag().getBPM();
+                } else if (mp3File.hasId3v1Tag()) {
+                    String title = mp3File.getId3v1Tag().getTitle();
+                    String tagArtist = mp3File.getId3v1Tag().getArtist();
+                    String tagGenre = mp3File.getId3v1Tag().getGenreDescription();
+
+                    if (title != null && !title.isBlank()) this.name = title;
+                    if (tagArtist != null && !tagArtist.isBlank()) this.artist = tagArtist;
+                    if (tagGenre != null && !tagGenre.isBlank()) this.genre = tagGenre;
+                }
+
+            } catch (InvalidDataException | UnsupportedTagException | IOException e) {
+                System.err.println("Could not read MP3 metadata: " + file.getName());
             }
-            this.url = file.toURI().toURL();
+        }
 
-        } catch (InvalidDataException e) {
-            throw new RuntimeException(e);
-        } catch (UnsupportedTagException e) {
-            throw new RuntimeException(e);
+        try {
+            this.url = file.toURI().toURL();
+            this.media = new Media(file.toURI().toString());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Could not load song: " + file.getAbsolutePath(), e);
         }
     }
-
     /**
      * genreScore
      * @param t Timeline to derive score

@@ -11,6 +11,7 @@ import model.Main;
 import model.Playlist;
 import model.Song;
 import model.SceneManager;
+import modelview.MusicPlayerController;
 
 import java.util.Objects;
 
@@ -117,7 +118,6 @@ public class PlaylistDetailsController {
     // Functionality pending based on player implementation - RD
     @FXML
     private void playPlaylist() {
-
         if (playlist == null || playlist.getSongs().isEmpty()) {
             showMessage(
                     "Play Playlist",
@@ -129,29 +129,35 @@ public class PlaylistDetailsController {
         Main.clearQueue();
         Main.addPlaylistToQueue(playlist);
 
-
-
         if (detailsStage != null) {
             detailsStage.close();
         }
 
         SceneManager.setScene(3);
+        MusicPlayerController.refreshPlayer();
     }
-
     @FXML
     private void addToQueue() {
-        Main.addPlaylistToQueue(playlist); // Add to temporary queue list - RD
-        // Display success message to user - RD
+        if (playlist == null || playlist.getSongs().isEmpty()) {
+            showMessage(
+                    "Add to Queue",
+                    "This playlist does not contain any songs."
+            );
+            return;
+        }
+
+        Main.addPlaylistToQueue(playlist);
+        MusicPlayerController.refreshPlayer();
+
         showMessage(
                 "Added to Queue",
-                "\"" + playlist.getName()
-                        + "\" was added to the queue.\n\n"
-                        + "Queue now contains "
-                        + Main.getQueueSize()
-                        + " songs."
+                "\"" + playlist.getName() +
+                        "\" was added to the queue.\n\n" +
+                        "Queue now contains " +
+                        Main.getQueueSize() +
+                        " songs."
         );
     }
-
     /*
      * Delete Playlist button - RD
      * Deletes playlist and removes from playlist tiles - RD
