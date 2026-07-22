@@ -5,11 +5,12 @@ import javafx.scene.control.*;
 
 import java.io.File;
 import java.util.ArrayList;
-import model.Main;
+
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Playlist;
+import model.SQLQuery;
 import model.Song;
 
 import javafx.scene.control.ListCell;
@@ -18,6 +19,7 @@ import javafx.scene.control.SelectionMode;
 public class CreatePlaylistController {
     @FXML
     private TextField playlistNameField;
+
 
     @FXML
     private ListView<Song> songListView;
@@ -117,9 +119,7 @@ public class CreatePlaylistController {
                 SelectionMode.MULTIPLE
         );
 
-        songListView.getItems().setAll(
-                Main.getPlaybackQueue()
-        );
+        loadSongs();
 
         songListView.setCellFactory(list -> new ListCell<>() {
             @Override
@@ -134,4 +134,35 @@ public class CreatePlaylistController {
             }
         });
     }
+    //Load songs method
+    private void loadSongs() {
+        songListView.getItems().setAll(
+                SQLQuery.getSongs()
+        );
+    }
+    //import song method
+    @FXML
+    private void importSong() {
+
+        FileChooser fileChooser = new FileChooser();
+
+        fileChooser.setTitle("Choose MP3 Song");
+
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter(
+                        "MP3 Audio Files",
+                        "*.mp3"
+                )
+        );
+
+        File selectedFile = fileChooser.showOpenDialog(
+                songListView.getScene().getWindow()
+        );
+
+        if (selectedFile != null) {
+            SQLQuery.addSong(selectedFile);
+            loadSongs();
+        }
+    }
+
 }

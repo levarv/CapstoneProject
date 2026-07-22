@@ -43,29 +43,6 @@ public class LibraryController {
     }
 
 
-    //import song method
-    @FXML
-    private void importSong() {
 
-        FileChooser fileChooser = new FileChooser();
-
-        fileChooser.setTitle("Choose MP3 Song");
-
-        fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter(
-                        "MP3 Audio Files",
-                        "*.mp3"
-                )
-        );
-
-        File selectedFile = fileChooser.showOpenDialog(
-                libraryList.getScene().getWindow()
-        );
-
-        if (selectedFile != null) {
-            SQLQuery.addSong(selectedFile);
-            loadSongs();
-        }
-    }
 
 }

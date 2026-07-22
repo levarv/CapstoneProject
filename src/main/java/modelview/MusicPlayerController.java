@@ -13,7 +13,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Button;
 import model.Main;
 import model.Song;
-import java.util.ArrayList;
+
 import model.SceneManager;
 
 import javafx.fxml.FXML;
@@ -22,7 +22,7 @@ import model.SceneManager;
 
 public class MusicPlayerController {
 
-    private ArrayList<Song> songs;
+
     private int currentIndex = 0;
 
     private MediaPlayer mediaPlayer;
@@ -75,8 +75,6 @@ public class MusicPlayerController {
     @FXML
     public void initialize() {
 
-        songs = Main.getPlaybackQueue();
-
         setupQueue();
         drawStars();
 
@@ -90,7 +88,7 @@ public class MusicPlayerController {
                 }
         );
 
-        if (!songs.isEmpty()) {
+        if (!Main.getPlaybackQueue().isEmpty()) {
             currentIndex = 0;
             loadSong();
         } else {
@@ -103,16 +101,20 @@ public class MusicPlayerController {
 
     private void loadSong() {
 
-        if (songs == null || songs.isEmpty()) {
+        if (Main.getPlaybackQueue().isEmpty()) {
             showEmptyQueue();
             return;
         }
 
-        if (currentIndex < 0 || currentIndex >= songs.size()) {
+        if (
+                currentIndex < 0 ||
+                        currentIndex >= Main.getPlaybackQueue().size()
+        ) {
             currentIndex = 0;
         }
 
-        Song selectedSong = songs.get(currentIndex);
+        Song selectedSong =
+                Main.getPlaybackQueue().get(currentIndex);
 
         if (selectedSong == null || selectedSong.getUrl() == null) {
             System.err.println(
@@ -135,7 +137,10 @@ public class MusicPlayerController {
         );
 
         mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setVolume(volumeSlider.getValue() / 100.0);
+
+        mediaPlayer.setVolume(
+                volumeSlider.getValue() / 100.0
+        );
 
         updateSongInfo();
         updateQueue();
@@ -147,7 +152,8 @@ public class MusicPlayerController {
 
         mediaPlayer.setOnError(() -> {
             System.err.println(
-                    "Media player error: " + mediaPlayer.getError()
+                    "Media player error: " +
+                            mediaPlayer.getError()
             );
         });
     }
@@ -174,17 +180,24 @@ public class MusicPlayerController {
 
     private void updateQueue() {
 
-        if (songs == null || songs.isEmpty()) {
+        if (Main.getPlaybackQueue().isEmpty()) {
+            nextQueuedSong = null;
+
+            if (nextSongLabel != null) {
+                nextSongLabel.setText("Up Next: None");
+            }
+
             return;
         }
 
         int nextIndex = currentIndex + 1;
 
-        if (nextIndex >= songs.size()) {
+        if (nextIndex >= Main.getPlaybackQueue().size()) {
             nextIndex = 0;
         }
 
-        nextQueuedSong = songs.get(nextIndex);
+        nextQueuedSong =
+                Main.getPlaybackQueue().get(nextIndex);
 
         if (nextSongLabel != null && nextQueuedSong != null) {
             nextSongLabel.setText(
@@ -302,7 +315,7 @@ public class MusicPlayerController {
     @FXML
     private void nextSong() {
 
-        if (songs == null || songs.isEmpty()) {
+        if (Main.getPlaybackQueue().isEmpty()) {
             showEmptyQueue();
             return;
         }
@@ -312,10 +325,13 @@ public class MusicPlayerController {
             int randomIndex;
 
             do {
-                randomIndex = (int) (Math.random() * songs.size());
+                randomIndex =
+                        (int) (Math.random() *
+                                Main.getPlaybackQueue().size());
+
             } while (
                     randomIndex == currentIndex &&
-                            songs.size() > 1
+                            Main.getPlaybackQueue().size() > 1
             );
 
             currentIndex = randomIndex;
@@ -324,7 +340,7 @@ public class MusicPlayerController {
 
             currentIndex++;
 
-            if (currentIndex >= songs.size()) {
+            if (currentIndex >= Main.getPlaybackQueue().size()) {
                 currentIndex = 0;
             }
         }
@@ -342,7 +358,7 @@ public class MusicPlayerController {
     @FXML
     private void previousSong() {
 
-        if (songs == null || songs.isEmpty()) {
+        if (Main.getPlaybackQueue().isEmpty()) {
             showEmptyQueue();
             return;
         }
@@ -350,7 +366,8 @@ public class MusicPlayerController {
         currentIndex--;
 
         if (currentIndex < 0) {
-            currentIndex = songs.size() - 1;
+            currentIndex =
+                    Main.getPlaybackQueue().size() - 1;
         }
 
         loadSong();
@@ -359,7 +376,6 @@ public class MusicPlayerController {
             mediaPlayer.play();
         }
     }
-
 
 
 
@@ -613,11 +629,13 @@ public class MusicPlayerController {
 
         queueList.getItems().clear();
 
-        if (songs == null || songs.isEmpty()) {
+        if (Main.getPlaybackQueue().isEmpty()) {
             return;
         }
 
-        queueList.getItems().addAll(songs);
+        queueList.getItems().addAll(
+                Main.getPlaybackQueue()
+        );
 
         queueList.setOnMouseClicked(event -> {
 
@@ -625,7 +643,10 @@ public class MusicPlayerController {
                     .getSelectionModel()
                     .getSelectedIndex();
 
-            if (index >= 0 && index < songs.size()) {
+            if (
+                    index >= 0 &&
+                            index < Main.getPlaybackQueue().size()
+            ) {
 
                 currentIndex = index;
 
@@ -637,6 +658,7 @@ public class MusicPlayerController {
             }
         });
     }
+
     //shuffle songs method
     @FXML
     private void shuffleSong(){
@@ -706,11 +728,10 @@ public class MusicPlayerController {
     //Refresh Queue method lets the project refresh the player after adding a playlist:
     public void refreshQueue() {
 
-        songs = Main.getPlaybackQueue();
-
         setupQueue();
 
-        if (songs.isEmpty()) {
+        if (Main.getPlaybackQueue().isEmpty()) {
+
             currentIndex = 0;
 
             if (mediaPlayer != null) {
@@ -723,7 +744,7 @@ public class MusicPlayerController {
             return;
         }
 
-        if (currentIndex >= songs.size()) {
+        if (currentIndex >= Main.getPlaybackQueue().size()) {
             currentIndex = 0;
         }
 

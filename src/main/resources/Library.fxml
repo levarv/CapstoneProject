@@ -52,11 +52,6 @@
                        styleClass="library-search"/>
 
 
-            <Button text="+ Import Song"
-                    onAction="#importSong"
-                    prefWidth="180"
-                    prefHeight="42"
-                    styleClass="import-song-button"/>
 
             <ListView fx:id="libraryList"
                       maxWidth="850"

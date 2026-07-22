@@ -51,6 +51,13 @@
                     text="Available Songs"
                     styleClass="section-title"/>
 
+            <Button
+                    text="+ Import Song"
+                    onAction="#importSong"
+                    prefWidth="180.0"
+                    prefHeight="42.0"
+                    styleClass="import-song-button"/>
+
             <ListView
                     fx:id="songListView"
                     prefHeight="230.0"
