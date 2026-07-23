@@ -1,4 +1,4 @@
-package modelview;
+package view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -836,6 +836,8 @@ public class MusicPlayerController {
     @FXML
     public void addTTSong(ActionEvent actionEvent) {
         if (mPick != null)
-            Main.getPlaybackQueue().add(mPick);
+            queueList.getItems().add(mPick);
+
+        queueList.refresh();
     }
 }

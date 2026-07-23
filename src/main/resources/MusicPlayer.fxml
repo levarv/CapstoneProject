@@ -6,7 +6,7 @@
 <VBox spacing="15" alignment="CENTER"
       xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="modelview.MusicPlayerController">
+      fx:controller="view.MusicPlayerController">
 
 <Label fx:id="songLabel" text="No Song Loaded"/>
 

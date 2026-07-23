@@ -1,10 +1,8 @@
-package modelview;
+package model;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.SQLQuery;
-import model.SceneManager;
 
 import java.net.URL;
 

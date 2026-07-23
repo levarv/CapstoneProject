@@ -9,7 +9,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="modelview.LibraryController"
+            fx:controller="view.LibraryController"
             stylesheets="@style.css"
             styleClass="library-root"
             prefWidth="1200"

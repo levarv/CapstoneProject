@@ -2,7 +2,6 @@ package view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -11,7 +10,6 @@ import model.Main;
 import model.Playlist;
 import model.Song;
 import model.SceneManager;
-import modelview.MusicPlayerController;
 
 import java.util.Objects;
 
