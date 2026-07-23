@@ -27,11 +27,35 @@ public class SQLQuery {
 
             ResultSetMetaData meta = resultSet.getMetaData();
 
-            for (int i = 1; i <= meta.getColumnCount(); i++) {
-                System.out.println(
-                        "Column " + i + ": " + meta.getColumnName(i)
-                );
-            }
+            while (resultSet.next())
+                songs.add( new Song( new File((String) resultSet.getObject(7))));
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        return songs;
+    }
+
+    public static ArrayList<Song> getSongs(String q) {
+
+        ArrayList<Song> songs = new ArrayList<>();
+
+        try (
+                Connection connection =
+                        DriverManager.getConnection(DATABASE_URL);
+
+                Statement statement =
+                        connection.createStatement();
+
+                ResultSet resultSet =
+                        statement.executeQuery(q)
+        ) {
+
+            ResultSetMetaData meta = resultSet.getMetaData();
+
+            while (resultSet.next())
+                songs.add( new Song( new File((String) resultSet.getObject(7))));
 
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -67,8 +91,6 @@ public class SQLQuery {
 
     public static void update(String update) {
 
-        System.out.println(update);
-
         try (
                 Connection connection =
                         DriverManager.getConnection(DATABASE_URL);
@@ -83,4 +105,5 @@ public class SQLQuery {
             exception.printStackTrace();
         }
     }
+
 }

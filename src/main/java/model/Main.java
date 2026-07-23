@@ -164,7 +164,7 @@ public class Main {
 
                     String update = String.format(
                             "INSERT INTO Song (Artist,Name,BPM,ReleaseDate,Genre,ImageURL,SongURL)" +
-                            " VALUES ('%S', '%S', %S, '%S', '%S','%S','%S')",
+                            " VALUES ('%s', '%s', %s, '%s', '%s','%s','%s')",
                             tbAdded.getArtist(),
                             tbAdded.getName(),
                             tbAdded.getBpm(),
@@ -174,6 +174,7 @@ public class Main {
                             mp3.getPath()
                     );
 
+                    System.out.println(update);
                     SQLQuery.update(update);
 
                 }
@@ -184,8 +185,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
-
-        //loadSongsFromUserRepo();
+        SQLQuery.update("DELETE FROM Song");
+        loadSongsFromUserRepo();
 
         t = new Timeline("HOUR");
 
@@ -194,8 +195,6 @@ public class Main {
                 .arg1(.5)
                 .arg2(.4)
                 .build();
-
-
 
         Application.main(args);
     }

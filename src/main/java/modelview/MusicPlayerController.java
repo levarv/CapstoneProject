@@ -1,5 +1,6 @@
 package modelview;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -8,20 +9,25 @@ import javafx.scene.control.Slider;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Button;
 import model.Main;
+import model.SQLQuery;
 import model.Song;
 import javafx.scene.control.ListCell;
 
 import model.SceneManager;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 
 public class MusicPlayerController {
 
     private static MusicPlayerController instance;
+    public Text TTtext;
 
     private int currentIndex = 0;
 
@@ -29,7 +35,7 @@ public class MusicPlayerController {
     private Song currentSong;
     private Song nextQueuedSong;
 
-
+    private Song mPick;
     private boolean shuffle = false;
     private boolean repeat = false;
     private boolean favorite = false;
@@ -45,7 +51,6 @@ public class MusicPlayerController {
 
     @FXML
     private Slider volumeSlider;
-
 
 
     @FXML
@@ -162,7 +167,26 @@ public class MusicPlayerController {
         });
     }
 
+    public void printToTextBox() {
+        String q = Main.getSongPicker().SQLquery();
+        System.out.println(q);
+        ArrayList<Song> s = SQLQuery.getSongs(q);
 
+        //try to query a relevant subset 5 or fewer times
+        for (int i = 0; q == null &&
+                i < 5 &&
+                !Main.getPlaybackQueue().isEmpty(); ++i) {
+
+            q = Main.getSongPicker().SQLquery();
+            s = SQLQuery.getSongs(q);
+        }
+
+        if (!s.isEmpty()) {
+            TTtext.setText(s.getFirst().getName());
+            mPick = s.getFirst();
+        }
+        else { TTtext.setText(""); System.out.println("empty query"); }
+    }
 
 
     private void updateSongInfo(){
@@ -171,11 +195,16 @@ public class MusicPlayerController {
                 currentSong.getName()
         );
 
-
         artistLabel.setText(
                 currentSong.getArtist()
         );
 
+        //song is added to M.S.P timeline
+        Main.getTimeline().add(currentSong);
+        //setTheLastListen of song
+        currentSong.setLastListen(LocalDateTime.now());
+        //text corresponding to the song chosen is generated
+        printToTextBox();
     }
 
 
@@ -804,5 +833,9 @@ public class MusicPlayerController {
     private void openMenu() {
         SceneManager.setScene(1);
     }
-
+    @FXML
+    public void addTTSong(ActionEvent actionEvent) {
+        if (mPick != null)
+            Main.getPlaybackQueue().add(mPick);
+    }
 }

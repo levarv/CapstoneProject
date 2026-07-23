@@ -55,7 +55,7 @@ public class TestUser extends Thread {
                 timeline.getAverageBPM()
         );
 
-        mpicker.pretendSQLquery();
+        mpicker.SQLquery();
 
         System.out.println("Songs retained");
         System.out.println(timeline.getSongs().size());

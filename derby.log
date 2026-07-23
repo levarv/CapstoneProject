@@ -1,11 +1,11 @@
 ----------------------------------------------------------------
-Wed Jul 22 03:04:32 EDT 2026:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance a816c00e-019f-88a3-ec8d-00000e75a350 
-on database directory C:\Users\kaife\IdeaProjects\CapstoneProject\firstdb with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@14dad5dc 
-Loaded from file:/C:/Users/kaife/.m2/repository/org/apache/derby/derby/10.17.1.0/derby-10.17.1.0.jar
-java.vendor=Oracle Corporation
-java.runtime.version=25-loom+1-11
-user.dir=C:\Users\kaife\IdeaProjects\CapstoneProject
+Wed Jul 22 23:11:06 EDT 2026:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance a816c00e-019f-8cf4-9302-00001e8efca8 
+on database directory C:\Users\Ronald\OneDrive\Desktop\CSC325_Project\firstdb with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@14dad5dc 
+Loaded from file:/C:/Users/Ronald/.m2/repository/org/apache/derby/derby/10.17.1.0/derby-10.17.1.0.jar
+java.vendor=Microsoft
+java.runtime.version=25.0.2+10-LTS
+user.dir=C:\Users\Ronald\OneDrive\Desktop\CSC325_Project
 os.name=Windows 11
 os.arch=amd64
 os.version=10.0

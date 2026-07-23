@@ -119,7 +119,7 @@ public class MagicSongPicker {
     /**
      * a simple and uncommited demonstration of how the algorithm will query a suggestion
      */
-    public void pretendSQLquery() {
+    public String SQLquery() {
         Random index = new Random();
         HashSet<String> hs1 = byGenre(arg1, minutes);
         HashSet<String> hs2 = byArtist(arg2, minutes);
@@ -130,6 +130,6 @@ public class MagicSongPicker {
         list = hs2.toArray();
         String b = (String) list[index.nextInt(0,list.length)];
 
-        System.out.println("SELECT FROM SONG WHERE genre = " + a + " AND artist = " + b+";");
+        return "SELECT * FROM SONG WHERE genre = " + "'"+a+"'" + " AND artist = " + "'"+b+"'";
     }
 }
